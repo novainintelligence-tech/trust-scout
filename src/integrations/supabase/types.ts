@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      verifications: {
+        Row: {
+          cap_reasons: Json
+          capped: boolean
+          categories: Json
+          confidence: number
+          created_at: string
+          domain: string
+          duration_ms: number
+          evidence: Json
+          id: string
+          recommendation: string
+          risk_level: string
+          status: string
+          target: string
+          trust_score: number
+        }
+        Insert: {
+          cap_reasons?: Json
+          capped?: boolean
+          categories?: Json
+          confidence: number
+          created_at?: string
+          domain: string
+          duration_ms?: number
+          evidence?: Json
+          id?: string
+          recommendation?: string
+          risk_level: string
+          status: string
+          target: string
+          trust_score: number
+        }
+        Update: {
+          cap_reasons?: Json
+          capped?: boolean
+          categories?: Json
+          confidence?: number
+          created_at?: string
+          domain?: string
+          duration_ms?: number
+          evidence?: Json
+          id?: string
+          recommendation?: string
+          risk_level?: string
+          status?: string
+          target?: string
+          trust_score?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
