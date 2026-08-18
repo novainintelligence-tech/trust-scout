@@ -64,9 +64,9 @@ export const Route = createFileRoute("/api/public/v1/verify/website")({
             status: report.status,
             confidence: report.confidence,
             capped: report.capped,
-            cap_reasons: report.applied_gates,
-            categories: report.categories,
-            evidence: report.evidence,
+            cap_reasons: JSON.parse(JSON.stringify(report.applied_gates)),
+            categories: JSON.parse(JSON.stringify(report.categories)),
+            evidence: JSON.parse(JSON.stringify(report.evidence)),
             recommendation: report.recommendation,
             duration_ms: report.duration_ms,
           });
