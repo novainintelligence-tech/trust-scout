@@ -10,33 +10,78 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicV1HealthRouteImport } from './routes/api/public/v1/health'
+import { Route as ApiPublicV1VerificationsIdRouteImport } from './routes/api/public/v1/verifications/$id'
+import { Route as ApiPublicV1VerifyWebsiteRouteImport } from './routes/api/public/v1/verify/website'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1HealthRoute = ApiPublicV1HealthRouteImport.update({
+  id: '/api/public/v1/health',
+  path: '/api/public/v1/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicV1VerificationsIdRoute =
+  ApiPublicV1VerificationsIdRouteImport.update({
+    id: '/api/public/v1/verifications/$id',
+    path: '/api/public/v1/verifications/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicV1VerifyWebsiteRoute =
+  ApiPublicV1VerifyWebsiteRouteImport.update({
+    id: '/api/public/v1/verify/website',
+    path: '/api/public/v1/verify/website',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/v1/health': typeof ApiPublicV1HealthRoute
+  '/api/public/v1/verifications/$id': typeof ApiPublicV1VerificationsIdRoute
+  '/api/public/v1/verify/website': typeof ApiPublicV1VerifyWebsiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/v1/health': typeof ApiPublicV1HealthRoute
+  '/api/public/v1/verifications/$id': typeof ApiPublicV1VerificationsIdRoute
+  '/api/public/v1/verify/website': typeof ApiPublicV1VerifyWebsiteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/v1/health': typeof ApiPublicV1HealthRoute
+  '/api/public/v1/verifications/$id': typeof ApiPublicV1VerificationsIdRoute
+  '/api/public/v1/verify/website': typeof ApiPublicV1VerifyWebsiteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/public/v1/health'
+    | '/api/public/v1/verifications/$id'
+    | '/api/public/v1/verify/website'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/public/v1/health'
+    | '/api/public/v1/verifications/$id'
+    | '/api/public/v1/verify/website'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/public/v1/health'
+    | '/api/public/v1/verifications/$id'
+    | '/api/public/v1/verify/website'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicV1HealthRoute: typeof ApiPublicV1HealthRoute
+  ApiPublicV1VerificationsIdRoute: typeof ApiPublicV1VerificationsIdRoute
+  ApiPublicV1VerifyWebsiteRoute: typeof ApiPublicV1VerifyWebsiteRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +93,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/health': {
+      id: '/api/public/v1/health'
+      path: '/api/public/v1/health'
+      fullPath: '/api/public/v1/health'
+      preLoaderRoute: typeof ApiPublicV1HealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/verifications/$id': {
+      id: '/api/public/v1/verifications/$id'
+      path: '/api/public/v1/verifications/$id'
+      fullPath: '/api/public/v1/verifications/$id'
+      preLoaderRoute: typeof ApiPublicV1VerificationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/v1/verify/website': {
+      id: '/api/public/v1/verify/website'
+      path: '/api/public/v1/verify/website'
+      fullPath: '/api/public/v1/verify/website'
+      preLoaderRoute: typeof ApiPublicV1VerifyWebsiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicV1HealthRoute: ApiPublicV1HealthRoute,
+  ApiPublicV1VerificationsIdRoute: ApiPublicV1VerificationsIdRoute,
+  ApiPublicV1VerifyWebsiteRoute: ApiPublicV1VerifyWebsiteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
