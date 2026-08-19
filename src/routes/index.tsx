@@ -142,10 +142,14 @@ function Index() {
                 </span>
               </div>
               <p className="mt-4 text-sm text-foreground">{report.recommendation}</p>
-              <dl className="mt-4 grid grid-cols-2 gap-3 font-mono text-[11px] text-muted-foreground sm:grid-cols-4">
+              <dl className="mt-4 grid grid-cols-2 gap-3 font-mono text-[11px] text-muted-foreground sm:grid-cols-5">
                 <div>
                   <dt>raw score</dt>
                   <dd className="text-foreground">{report.raw_score}</dd>
+                </div>
+                <div>
+                  <dt>coverage</dt>
+                  <dd className="text-foreground">{Math.round((report.coverage ?? 0) * 100)}%</dd>
                 </div>
                 <div>
                   <dt>confidence</dt>
@@ -183,6 +187,34 @@ function Index() {
             )}
 
             <div>
+              <h2 className="text-sm font-semibold text-foreground">Source adapters</h2>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {(report.sources ?? []).map((s) => (
+                  <div
+                    key={s.source_id}
+                    className="flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 font-mono text-[11px]"
+                  >
+                    <span
+                      className={
+                        s.status === "ok"
+                          ? "text-verified"
+                          : s.status === "unavailable"
+                            ? "text-unverified"
+                            : "text-critical"
+                      }
+                    >
+                      {s.status === "ok" ? "OK" : s.status === "unavailable" ? "UNKNOWN" : "ERROR"}
+                    </span>
+                    <span className="text-foreground">{s.label}</span>
+                    <span className="ml-auto text-muted-foreground">
+                      {s.evidence_count} · {s.duration_ms}ms
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
               <h2 className="text-sm font-semibold text-foreground">Signal categories</h2>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 {Object.values(report.categories).map((c) => (
@@ -190,17 +222,21 @@ function Index() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm capitalize text-foreground">{c.category}</span>
                       <span className="font-mono text-xs text-muted-foreground">
-                        {c.score === null ? "unavailable" : `${c.score}/100`} · w{c.weight}
+                        {c.score === null ? "UNKNOWN — not scored" : `${c.score}/100`}
                       </span>
                     </div>
                     <p className="mt-1 font-mono text-[11px] text-muted-foreground">
-                      outcome: {c.outcome} · confidence {c.confidence} · {c.evidence_ids.length}{" "}
-                      evidence items
+                      {c.result.toUpperCase()} · applied weight{" "}
+                      {Math.round((c.effective_weight ?? 0) * 100)}% · confidence {c.confidence}
+                    </p>
+                    <p className="mt-1 font-mono text-[11px] text-muted-foreground">
+                      {c.known_signals} known · {c.unknown_signals} unknown signals
                     </p>
                   </div>
                 ))}
               </div>
             </div>
+
 
             <div>
               <h2 className="text-sm font-semibold text-foreground">
