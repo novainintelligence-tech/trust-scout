@@ -1,32 +1,5 @@
-import type { Evidence, SignalCategory, Severity, SignalOutcome } from "./types";
+/* Low-level probes. Evidence records are built by the source adapters. */
 
-let counter = 0;
-export function evidence(
-  category: SignalCategory,
-  check: string,
-  source: string,
-  observation: string,
-  outcome: SignalOutcome,
-  severity: Severity,
-  confidence: number,
-  weight: number,
-  explanation: string,
-): Evidence {
-  counter += 1;
-  return {
-    id: `${category}-${counter}`,
-    category,
-    check,
-    source,
-    observation,
-    outcome,
-    severity,
-    confidence,
-    weight,
-    explanation,
-    observed_at: new Date().toISOString(),
-  };
-}
 
 export interface FetchResult {
   ok: boolean;
